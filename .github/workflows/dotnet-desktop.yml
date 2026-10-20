@@ -1,0 +1,42 @@
+name: Build & Zip LiteMonitor
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x' # 改成你项目的版本，6.0 /7.0 /8.0
+
+    - name: Restore dependencies
+      run: dotnet restore LiteMonitor.csproj
+
+    - name: Publish 独立单文件
+      run: |
+        dotnet publish LiteMonitor.csproj `
+          -c Release `
+          -r win-x64 `
+          --self-contained true `
+          -p:PublishSingleFile=true `
+          -p:IncludeNativeLibrariesForSelfExtract=true `
+          -o ./publish-output
+
+    - name: Compress to zip
+      run: |
+        Compress-Archive -Path ./publish-output/* -DestinationPath ./LiteMonitor.zip -Force
+
+    - name: Upload zip artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: LiteMonitor-Win-x64
+        path: ./LiteMonitor.zip
