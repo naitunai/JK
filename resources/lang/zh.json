@@ -25,6 +25,7 @@
     "GPU.Load": "GPU使用率",
     "GPU.Temp": "GPU温度",
     "GPU.VRAM": "显存占用",
+    "GPU.VRAM.Temp": "显存温度",
     "GPU.Clock": "GPU频率",
     "GPU.Power": "GPU功耗",
     "GPU.Fan": "GPU风扇",
@@ -59,6 +60,7 @@
     "GPU.Load": "GPU",
     "GPU.Temp": "GPU",
     "GPU.VRAM": "显存",
+    "GPU.VRAM.Temp": "显存温",
     "GPU.Clock": "GCLK",
     "GPU.Power": "GPWR",
     "GPU.Fan": "GFAN",
@@ -95,7 +97,6 @@
     "ThemeEditor": "主题编辑器",
     "CleanMemory": "清理内存",
     "CleanMemorySuccess": "内存清理完成",
-
     "__Comment_Page1__": "--- 1. 主界面设置 (MainPanelPage) ---",
     "MainFormSettings": "主界面设置",
     "HideMainForm": "隐藏主界面",
@@ -115,7 +116,6 @@
     "WebServerPasswordTip": "留空即无密码",
     "OpenWeb": "打开网页",
     "WebServerTip": "⚠️开启网页版后，手机可通过局域网“内网IP:端口”访问，或“IPv6:端口”远程访问",
-
     "Appearance": "外观设置",
     "Theme": "主题",
     "DisplayMode": "显示模式",
@@ -126,7 +126,6 @@
     "Opacity": "透明度",
     "Percent": "百分比",
     "UsedSize": "已用容量",
-
     "__Comment_Page2__": "--- 2. 任务栏设置 (TaskbarPage) ---",
     "TaskbarSettings": "任务栏设置",
     "TaskbarShow": "任务栏显示",
@@ -157,7 +156,6 @@
     "BackgroundColor": "字体背景色",
     "ScreenColorPicker": "屏幕取色工具",
     "ScreenColorPickerTip": "是否将字体背景颜色设为：",
-
     "__Comment_Page3__": "--- 3. 监控项显示 (MonitorPage) ---",
     "MonitorItemDisplay": "监控项显示",
     "MonitorItem": "监控项",
@@ -171,38 +169,29 @@
     "OnlyShowEnabled": "仅看显示项",
     "HorizontalFollowsTaskbar": "横条模式采用任务栏排序",
     "MonitorItemTip": "注：名称/简称/单位输入空格即可不显示标签或单位，而清空保存后会恢复默认，部分单位支持占位符{u}+字符",
-
     "__Comment_Page4__": "--- 4. 告警阈值设置 (ThresholdPage) ---",
     "Thresholds": "告警阈值设置",
     "AlertTemp": "高温报警弹窗",
     "AlertThreshold": "高温报警阈值",
-    
     "ThresholdsTips": "⚠️进度条和数值将根据硬件阈值显示对应的颜色",
     "GeneralHardware": "通用硬件",
     "HardwareLoad": "硬件负载",
-    
     "HardwareTemp": "硬件温度",
-
     "NetworkDiskSpeed": "网络与磁盘速率",
     "DiskIOSpeed": "磁盘读写速率",
     "UploadSpeed": "上传速率",
     "DownloadSpeed": "下载速率",
-
     "DailyTraffic": "每日流量统计",
-
     "__Comment_Page5__": "--- 5. 系统与硬件 (SystemHardwarPage) ---",
     "SystemHardwar": "硬件与系统",
-    
     "SystemSettings": "系统设置",
     "Language": "语言/Language",
     "AutoStart": "开机启动",
     "AutoCheckUpdate": "自动检查更新",
     "HideTrayIcon": "隐藏托盘图标",
-
     "Calibration": "硬件参数校准",
     "MaxLimits": "最大值",
     "CalibrationTip": "⚠️为了进度条显示更准确，请填写硬件实际的最大值，不填将在高负载时自动学习并更新最大值",
-
     "HardwareSettings": "硬件与传感器设置",
     "DiskSource": "首选磁盘",
     "NetworkSource": "首选网卡",
@@ -212,7 +201,6 @@
     "Refresh": "刷新频率",
     "IgnoreSMBTraffic": "不统计局域网SMB流量",
     "MemoryDisplayMode": "内存/显存显示",
-    
     "__Comment_Page6__": "--- 6. 插件管理 (PluginPage) ---",
     "Plugins": "插件管理",
     "PluginDevGuide": "📖插件开发指南",
