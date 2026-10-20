@@ -121,6 +121,7 @@ namespace LiteMonitor
                 new MonitorItemConfig { Key = "GPU.Power", SortIndex = 304, VisibleInPanel = false },
                 new MonitorItemConfig { Key = "GPU.Fan",   SortIndex = 305, VisibleInPanel = false },
                 new MonitorItemConfig { Key = "GPU.VRAM",  SortIndex = 306, VisibleInPanel = true },
+                new MonitorItemConfig { Key = "GPU.VRAM.Temp", SortIndex = 307, VisibleInPanel = false }, // [VRAM Temp 改造] 显存温度，默认不进面板，可在右键“显示监控项”勾选
 
                 // [4xx] HOST (MEM, FPS, MOBO, DISK Temp, CASE Fan)
                 new MonitorItemConfig { Key = "MEM.Load",  SortIndex = 401, VisibleInPanel = true, VisibleInTaskbar = true },
