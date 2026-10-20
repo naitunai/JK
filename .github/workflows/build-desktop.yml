@@ -18,11 +18,17 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
-    - name: 还原依赖
-      run: dotnet restore src/LiteMonitor.csproj
+    - name: 自动查找项目文件并还原依赖
+      run: |
+        $csproj = Get-ChildItem -Filter *.csproj -Recurse | Select-Object -First 1
+        if ($null -eq $csproj) { throw "找不到 .csproj 文件！" }
+        Write-Host "找到项目文件: $($csproj.FullName)"
+        dotnet restore $csproj.FullName
 
     - name: 编译并打包为单文件绿色版 (Win-x64)
-      run: dotnet publish src/LiteMonitor.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o ./publish
+      run: |
+        $csproj = Get-ChildItem -Filter *.csproj -Recurse | Select-Object -First 1
+        dotnet publish $csproj.FullName -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o ./publish
 
     - name: 将编译结果压缩为 ZIP
       run: Compress-Archive -Path ./publish/* -DestinationPath ./LiteMonitor-Desktop.zip
@@ -31,4 +37,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: LiteMonitor-Desktop-x64-Release
-      path: ./LiteMonitor-Desktop.zip
+        path: ./LiteMonitor-Desktop.zip  # 已经修正了这里的缩进
