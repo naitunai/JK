@@ -1,12 +1,14 @@
 name: 自动编译并打包桌面端 ZIP
+
 on:
   push:
     branches: [ "main", "master" ]
-  workflow_dispatch:
+  workflow_dispatch: # 允许手动点击运行
 
 jobs:
   build:
     runs-on: windows-latest
+
     steps:
     - name: 拉取代码
       uses: actions/checkout@v4
@@ -16,32 +18,15 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
-    - name: 缓存 NuGet 包
-      uses: actions/cache@v4
-      with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget-
-
-    - name: 自动查找项目文件并还原依赖
-      run: |
-        $csproj = Get-ChildItem -Filter *.csproj -Recurse | Select-Object -First 1
-        if ($null -eq $csproj) { throw "找不到 .csproj 文件！" }
-        Write-Host "找到项目文件: $($csproj.FullName)"
-        dotnet restore $csproj.FullName
+    - name: 还原依赖
+      run: dotnet restore
 
     - name: 编译并打包为单文件绿色版 (Win-x64)
-      run: |
-        $csproj = Get-ChildItem -Filter *.csproj -Recurse | Select-Object -First 1
-        dotnet publish $csproj.FullName -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o ./publish
-      shell: pwsh
+      run: dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o ./publish
 
-    - name: 删除旧压缩包，打包ZIP
+    - name: 将编译结果压缩为 ZIP
       run: |
-        if(Test-Path ./LiteMonitor-Desktop.zip) { Remove-Item ./LiteMonitor-Desktop.zip }
         Compress-Archive -Path ./publish/* -DestinationPath ./LiteMonitor-Desktop.zip
-      shell: pwsh
 
     - name: 上传桌面端 ZIP 打包文件
       uses: actions/upload-artifact@v4
