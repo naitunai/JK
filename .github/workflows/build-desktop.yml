@@ -3,7 +3,7 @@ name: 自动编译并打包桌面端 ZIP
 on:
   push:
     branches: [ "main", "master" ]
-  workflow_dispatch: # 允许手动点击运行
+  workflow_dispatch:
 
 jobs:
   build:
@@ -19,17 +19,16 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: 还原依赖
-      run: dotnet restore
+      run: dotnet restore src/LiteMonitor.csproj
 
     - name: 编译并打包为单文件绿色版 (Win-x64)
-      run: dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o ./publish
+      run: dotnet publish src/LiteMonitor.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o ./publish
 
     - name: 将编译结果压缩为 ZIP
-      run: |
-        Compress-Archive -Path ./publish/* -DestinationPath ./LiteMonitor-Desktop.zip
+      run: Compress-Archive -Path ./publish/* -DestinationPath ./LiteMonitor-Desktop.zip
 
     - name: 上传桌面端 ZIP 打包文件
       uses: actions/upload-artifact@v4
       with:
         name: LiteMonitor-Desktop-x64-Release
-        path: ./LiteMonitor-Desktop.zip
+      path: ./LiteMonitor-Desktop.zip
