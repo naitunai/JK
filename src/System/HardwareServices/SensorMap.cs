@@ -322,6 +322,9 @@ namespace LiteMonitor.src.SystemServices
             {
                 if (s.SensorType == SensorType.Load && (Has(name, "core") || Has(name, "d3d 3d"))) return "GPU.Load";
                 if (s.SensorType == SensorType.Temperature && (Has(name, "core") || Has(name, "hot spot") || Has(name, "soc") || Has(name, "vr"))) return "GPU.Temp";
+                // [新增] 显存温度：NVIDIA / AMD 中高端卡通过 NVAPI 等上报为 "GPU Memory" 温度传感器
+// 类型限定为 Temperature，与显存占用(SmallData/Load) 完全隔离，互不误吃
+if (s.SensorType == SensorType.Temperature && Has(name, "memory")) return "GPU.VRAM.Temp";
                 
                 // VRAM
                 if (s.SensorType == SensorType.SmallData && (Has(name, "memory") || Has(name, "dedicated")))
