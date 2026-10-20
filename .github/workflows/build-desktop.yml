@@ -1,35 +1,45 @@
 name: 自动编译并打包桌面端 ZIP
-
 on:
   push:
     branches: [ "main", "master" ]
-  workflow_dispatch: # 允许手动点击运行
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: windows-latest
+    env:
+      ZIP_NAME: LiteMonitor-Desktop-x64-${{ github.sha }}.zip
 
     steps:
-    - name: 拉取代码
-      uses: actions/checkout@v4
+      - name: 拉取代码
+        uses: actions/checkout@v4
 
-    - name: 安装 .NET 8.0 SDK
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
+      - name: 缓存 NuGet 包
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
-    - name: 还原依赖
-      run: dotnet restore
+      - name: 安装 .NET 8.0 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
 
-    - name: 编译并打包为单文件绿色版 (Win-x64)
-      run: dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o ./publish
+      - name: 还原依赖
+        run: dotnet restore
 
-    - name: 将编译结果压缩为 ZIP
-      run: |
-        Compress-Archive -Path ./publish/* -DestinationPath ./LiteMonitor-Desktop.zip
+      - name: 编译发布 Win-x64 单文件
+        run: dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o ./publish
 
-    - name: 上传桌面端 ZIP 打包文件
-      uses: actions/upload-artifact@v4
-      with:
-        name: LiteMonitor-Desktop-x64-Release
-        path: ./LiteMonitor-Desktop.zip
+      - name: 压缩打包
+        run: |
+          Compress-Archive -Path ./publish/* -DestinationPath $env:ZIP_NAME
+        shell: pwsh
+
+      - name: 上传产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ZIP_NAME }}
+          path: ./${{ env.ZIP_NAME }}
