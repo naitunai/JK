@@ -10,58 +10,57 @@
     <ApplicationIcon>resources\assets\app.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <DebugType>none</DebugType>
-		<DebugSymbols>false</DebugSymbols>
-	  
+    <DebugSymbols>false</DebugSymbols>
+
     <Version>1.2.9</Version><!-- 程序主版本（UpdateChecker / About用） -->
     <AssemblyVersion>1.0.0.0</AssemblyVersion><!-- 稳定不动 -->
     <FileVersion>1.2.9.0</FileVersion><!-- 文件属性显示 -->
   </PropertyGroup>
 
-
-	<ItemGroup>
+  <ItemGroup>
     <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.6-pre616" />
     <PackageReference Include="System.Text.Json" Version="9.0.10" />
   </ItemGroup>
 
-    <!-- 自动复制 themes 与 lang 目录下的所有文件 -->
-    <ItemGroup>
-        <Content Include="resources\themes\*.json">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-            <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-        </Content>
+  <!-- 自动复制 themes / lang / plugins / version.json -->
+  <ItemGroup>
+    <Content Include="resources\themes\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
 
-        <Content Include="resources\lang\*.json">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-            <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-        </Content>
+    <Content Include="resources\lang\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
 
-        <Content Include="resources\plugins\*.json">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-            <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-        </Content>
+    <Content Include="resources\plugins\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
 
-        <Content Include="resources\version.json">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-            <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-        </Content>
-    </ItemGroup>
-	<ItemGroup>
-		<Content Include="resources\LiteMonitor.Updater.exe">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-	
-	
-<ItemGroup>
-  <Compile Remove="LiteMonitor.Updater\**" />
-  <Compile Remove="LiteMonitor.Wpf\**" />
-  <EmbeddedResource Remove="LiteMonitor.Updater\**" />
-  <EmbeddedResource Remove="LiteMonitor.Wpf\**" />
-  <None Remove="LiteMonitor.Updater\**" />
-  <None Remove="LiteMonitor.Wpf\**" />
-</ItemGroup>
-	
-<!-- 引入文件资源管理 -->
+    <Content Include="resources\version.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="resources\LiteMonitor.Updater.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="LiteMonitor.Updater\**" />
+    <Compile Remove="LiteMonitor.Wpf\**" />
+    <EmbeddedResource Remove="LiteMonitor.Updater\**" />
+    <EmbeddedResource Remove="LiteMonitor.Wpf\**" />
+    <None Remove="LiteMonitor.Updater\**" />
+    <None Remove="LiteMonitor.Wpf\**" />
+  </ItemGroup>
+
+  <!-- 引入文件资源管理 -->
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -69,7 +68,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-<!-- 引入文件资源管理 -->
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
