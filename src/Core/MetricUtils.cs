@@ -54,11 +54,14 @@ namespace LiteMonitor.src.Core
                 if (key.IndexOf("Power", StringComparison.OrdinalIgnoreCase) >= 0) return MetricType.Power;
                 return MetricType.Percent;
             }
+            // [VRAM Temp 改造] 温度判定前置：含 Temp 的键（如 GPU.VRAM.Temp）优先按温度处理，
+            // 否则会被下面的 VRAM 判定误判成内存类，无法套用 ℃单位/三色阈值/高温报警/峰值记录。
+            if (key.IndexOf("TEMP", StringComparison.OrdinalIgnoreCase) >= 0) return MetricType.Temperature;
+
             if (key.IndexOf("MEM", StringComparison.OrdinalIgnoreCase) >= 0 || 
                 key.IndexOf("VRAM", StringComparison.OrdinalIgnoreCase) >= 0) return MetricType.Memory;
 
             if (key.IndexOf("LOAD", StringComparison.OrdinalIgnoreCase) >= 0) return MetricType.Percent;
-            if (key.IndexOf("TEMP", StringComparison.OrdinalIgnoreCase) >= 0) return MetricType.Temperature;
             if (key.IndexOf("CLOCK", StringComparison.OrdinalIgnoreCase) >= 0) return MetricType.Frequency;
             if (key.IndexOf("POWER", StringComparison.OrdinalIgnoreCase) >= 0) return MetricType.Power;
             if (key.IndexOf("VOLTAGE", StringComparison.OrdinalIgnoreCase) >= 0) return MetricType.Voltage;
