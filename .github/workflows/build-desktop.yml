@@ -1,5 +1,4 @@
 name: 自动编译并打包桌面端 ZIP
-
 on:
   push:
     branches: [ "main", "master" ]
@@ -8,7 +7,6 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-
     steps:
     - name: 拉取代码
       uses: actions/checkout@v4
@@ -17,6 +15,14 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
+
+    - name: 缓存 NuGet 包
+      uses: actions/cache@v4
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
 
     - name: 自动查找项目文件并还原依赖
       run: |
@@ -29,12 +35,16 @@ jobs:
       run: |
         $csproj = Get-ChildItem -Filter *.csproj -Recurse | Select-Object -First 1
         dotnet publish $csproj.FullName -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o ./publish
+      shell: pwsh
 
-    - name: 将编译结果压缩为 ZIP
-      run: Compress-Archive -Path ./publish/* -DestinationPath ./LiteMonitor-Desktop.zip
+    - name: 删除旧压缩包，打包ZIP
+      run: |
+        if(Test-Path ./LiteMonitor-Desktop.zip) { Remove-Item ./LiteMonitor-Desktop.zip }
+        Compress-Archive -Path ./publish/* -DestinationPath ./LiteMonitor-Desktop.zip
+      shell: pwsh
 
     - name: 上传桌面端 ZIP 打包文件
       uses: actions/upload-artifact@v4
       with:
         name: LiteMonitor-Desktop-x64-Release
-        path: ./LiteMonitor-Desktop.zip  # 已经修正了这里的缩进
+        path: ./LiteMonitor-Desktop.zip
