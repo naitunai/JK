@@ -1,0 +1,63 @@
+{
+  "Name": "Dracula_Vampire",
+  "Version": 3,
+  "Layout": {
+    "Width": 240,
+    "LayoutScale": 1,
+    "RowHeight": 39,
+    "Padding": 3,
+    "CornerRadius": 7,
+    "GroupRadius": 7,
+    "GroupPadding": 0,
+    "GroupSpacing": 15,
+    "GroupBottom": 0,
+    "ItemGap": 0,
+    "GroupTitleOffset": 0
+  },
+  "Font": {
+    "Family": "\u841D\u8389\u4F53",
+    "ValueFamily": "cjkFonts \u5168\u7028\u9AD4",
+    "Title": 8,
+    "Group": 8,
+    "Item": 9,
+    "Value": 13,
+    "Bold": false,
+    "ItemSize": 0
+  },
+  "Thresholds": {
+    "Load": {
+      "Warn": 65,
+      "Crit": 85
+    },
+    "Temp": {
+      "Warn": 50,
+      "Crit": 70
+    },
+    "Vram": {
+      "Warn": 65,
+      "Crit": 85
+    },
+    "Mem": {
+      "Warn": 65,
+      "Crit": 85
+    },
+    "NetKBps": {
+      "Warn": 2097152,
+      "Crit": 8388608
+    }
+  },
+  "Color": {
+    "Background": "#151C26",
+    "TextTitle": "#BD93F9",
+    "TextGroup": "#6272A4",
+    "TextPrimary": "#FFFFFF",
+    "ValueSafe": "#50FA7B",
+    "ValueWarn": "#FFB86C",
+    "ValueCrit": "#FF5555",
+    "BarBackground": "#44475A",
+    "BarLow": "#50FA7B",
+    "BarMid": "#FFB86C",
+    "BarHigh": "#FF5555",
+    "GroupBackground": "#20283E"
+  }
+}
